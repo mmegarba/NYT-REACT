@@ -18,28 +18,19 @@ class Books extends Component {
   }
 
   componentDidMount() {
-    // this.loadArticles();
+    this.loadSavedArticles();
   }
 //
 //
 //
-    loadArticles = () => {
-      API.getArticles()
+// componentWillRecieve()
+
+  loadSavedArticles = () => {
+    API.getArticles()
+
       .then(res => this.setState({ savedArticles: res.data }))
       .catch(err => console.log(err));
-
-};
-//
-//
-//
-//
-//   //
-//   // loadBooks = () => {
-//   //   API.getBooks()
-//   //
-//   //     .then(res => this.setState({ books: res.data }))
-//   //     .catch(err => console.log(err));
-//   // };
+  };
 //
 //
   handleInputChange = event => {
@@ -54,14 +45,19 @@ class Books extends Component {
 //
 //
 //
-saveArticle = (Article) =>{
+saveArticle = (articles) =>{
 
-console.log(Article)
-// API.saveArticle(newArticle)
-// .then(res => this.setState({ books: this.state.books.concat([newBook]) }))
-// .catch(err => console.log(err));
-//
-// }
+var obj = {
+  headline:articles.headline.main,
+  byline:articles.byline.original
+}
+
+
+API.saveArticle(obj)
+.then(res => console.log(res))
+.catch(err => console.log(err));
+
+}
 //
 // deleteBook = event =>{
 //
@@ -70,7 +66,7 @@ console.log(Article)
 // .then(res => this.setState({ books: this.state.books.concat([newBook]) }))
 // .catch(err => console.log(err));
 //
-}
+
 
 
 // this.setState({ articles: res.data })
@@ -121,8 +117,10 @@ const query = "&q=" + this.state.topic + "+" + this.state.startyear + "+" + this
 
         <Row>
           <Col size="xs-12">
+
+          <h1 className="text-center" > Searched Articles </h1>
           {!this.state.articles.length ? (
-                          <h1 className="text-center">No Articles to Display</h1>
+                          <h3 className="text-center">No Articles to Display, please search</h3>
                         ) : (
                           <ArticleList>
                             {this.state.articles.map(articles => {
@@ -131,7 +129,7 @@ const query = "&q=" + this.state.topic + "+" + this.state.startyear + "+" + this
                                   key={articles.headline.main}
                                   headline={articles.headline.main}
                                   href={articles.web_url}
-                                  save={this.saveArticle(articles)}
+                                  save={this.saveArticle.bind(this, articles)}
                                 />
                               );
                             })}
@@ -142,6 +140,7 @@ const query = "&q=" + this.state.topic + "+" + this.state.startyear + "+" + this
 
 
         <Row>
+        <h1 className="text-center" > Saved Articles</h1>
           <Col size="xs-12">
           {this.state.savedArticles.length ? (
                           <List>

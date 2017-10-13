@@ -8,7 +8,11 @@ const db = require("../../models");
 
 module.exports = function(app){
 
+
+
+
   app.get("/api/articles", function(req, res) {
+
     db.Article
       .find(req.query)
       .sort({ date: -1 })
@@ -20,6 +24,8 @@ module.exports = function(app){
 
 
 app.post("/api/articles", function(req, res) {
+// console.log(req.body)
+
   db.Article
     .create(req.body)
     .then(dbModel => res.json(dbModel))

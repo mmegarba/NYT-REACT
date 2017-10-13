@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-  // const routes = require("./routes");
+// const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -14,6 +14,9 @@ app.use(express.static("client/build"));
 // app.use(routes);
 // require("./routes/api/books.js")(app);
 // Set up promises        with mongoose
+
+require("./routes/api/books.js")(app);
+
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
 mongoose.connect(

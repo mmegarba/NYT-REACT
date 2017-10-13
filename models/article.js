@@ -5,10 +5,10 @@ const articleSchema = new Schema({
   headline: { type: String, required: true },
   byline: { type: String, required: true },
   snippet: String,
-  pubdate: String
+  pubdate: String,
   date: { type: Date, default: Date.now }
 });
 
-const Book = mongoose.model("Article", articleSchema);
+const Article = mongoose.model("Article", articleSchema);
 
 module.exports = Article;
